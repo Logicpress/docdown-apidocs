@@ -187,6 +187,88 @@ You can request an array of all the workflows you have setup in your account. Th
 
 `GET https://api.docdown.io/v1/workflows`
 
+## Workflow Schema
+
+You can request the field schema that a workflow expects for execution. Each schema object inside the `fields` array describes what the API expects for each field.
+
+> To get the fields schema for a workflow:
+
+```shell
+curl "https://api.docdown.io/v1/workflows/schema/<WORKFLOW_ID>" \
+  -H "Authorization: bearer API_KEY"
+```
+
+> The above endpoint returns JSON structured like this:
+
+```json
+{
+  "fields": [
+    {
+      "key": "photo",
+      "label": "Photo",
+      "required": false,
+      "type": "string",
+      "helpText": "Image URL."
+    },
+    {
+      "key": "certify",
+      "label": "Certify",
+      "type": "boolean",
+      "required": false,
+      "helpText": "True or non-empty value marks the field as checked."
+    },
+    {
+      "key": "full_name",
+      "label": "Full Name",
+      "type": "string",
+      "required": false,
+      "helpText": "Text field that expects text data."
+    },
+    {
+      "key": "date_of_signature_dd_mm_yyyy",
+      "label": "Date of Signature (DDMMYYYY)",
+      "type": "string",
+      "required": false,
+      "helpText": "Text field that expects text data."
+    },
+    {
+      "key": "signature",
+      "label": "Signature",
+      "children": [
+        {
+          "key": "signerName",
+          "type": "string",
+          "required": true,
+          "helpText": "Full legal name of the signer."
+        },
+        {
+          "key": "signerEmail",
+          "type": "string",
+          "required": true,
+          "helpText": "Email address of the signer. Signer will receive completed document and audit trail at this address after completion."
+        },
+        {
+          "key": "signature",
+          "type": "string",
+          "helpText": "Signature image URL.",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
+```
+
+### HTTP Request
+
+`GET https://api.docdown.io/v1/workflows/schema/<WORKFLOW_ID>`
+
+### Parameters
+
+| Parameter   | Description            |
+| ----------- | ---------------------- |
+| WORKFLOW_ID | The id of the worklfow |
+
 # Executing a Workflow
 
 To execute a workflow, send a POST request to `https://api.docdown.io/v1/trigger/<WORKFLOW_ID>` with the field data in the request body.
