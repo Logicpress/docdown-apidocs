@@ -206,6 +206,25 @@ curl "https://api.docdown.io/v1/trigger/<WORKFLOW_ID>" \
         "signerName": "Joe Biden",
         "signerEmail": "potus@us.gov",
         "signature": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Joe_Biden_Signature.svg/176px-Joe_Biden_Signature.svg.png"
+    }
+    }\"
+  }
+```
+
+> The above request body can also be flattened as below:
+
+```shell
+curl "https://api.docdown.io/v1/trigger/<WORKFLOW_ID>" \
+  -H "Authorization: bearer API_KEY" \
+  -H "Content-Type: application/json" \
+  -d \"{
+      "photo": "https://upload.wikimedia.org/480px-Joe_Biden_presidential_portrait.jpg",
+      "certify": true,
+      "full_name": "Joe Biden",
+      "date_of_signature_dd_mm_yyyy": "01012021",
+      "signature.signerName": "Joe Biden",
+      "signature.signerEmail": "potus@us.gov",
+      "signature.signature": "https://upload.wikimedia.org/176px-Joe_Biden_Signature.svg.png"
     }\"
   }
 ```
@@ -228,6 +247,10 @@ curl "https://api.docdown.io/v1/trigger/<WORKFLOW_ID>" \
 | Parameter   | Description            |
 | ----------- | ---------------------- |
 | WORKFLOW_ID | The id of the worklfow |
+
+<aside class="notice">
+You can also send a "flat" request body for the signature field by using the dot notation for representing the signature object.
+</aside>
 
 ## Get the generated PDF file from workflow execution
 
